@@ -23,13 +23,15 @@ class TimeScraper(Scraper):
     
     def execute(self, content: str, keyword: str):
         soup = bs(content, 'html.parser')
+        content = soup.findAll('h3')
+        
         titles = set()
 
-        for title in soup.findAll('h3'):
+        for title in content:
             if keyword.lower() in title.text.lower():
                 titles.add((title.text.strip(), 'https://time.com/' + title.find_parent('a')['href']))
 
-        return list([list(title) for title in titles])
+        return [list(title) for title in titles]
 
 
 class BBCScraper(Scraper):
@@ -38,13 +40,15 @@ class BBCScraper(Scraper):
 
     def execute(self, content: str, keyword: str):
         soup = bs(content, 'html.parser')
+        content = soup.findAll('h3')
+
         titles = set()
 
-        for title in soup.findAll('h3'):
+        for title in content:
             if keyword.lower() in title.text.lower():
                 titles.add((title.text.strip(), 'https://www.bbc.com' + title.find_parent('a')['href']))
 
-        return list([list(title) for title in titles])
+        return [list(title) for title in titles]
 
 
 class TheGuardianScraper(Scraper):
@@ -53,13 +57,15 @@ class TheGuardianScraper(Scraper):
   
     def execute(self, content: str, keyword: str):
         soup = bs(content, 'html.parser')
+        content = soup.findAll('a')
+
         titles = set()
 
-        for title in soup.findAll('a'):
+        for title in content:
             if keyword.lower() in title.text.lower():
                 titles.add((title.text.strip(), title['href']))
 
-        return list([list(title) for title in titles])
+        return [list(title) for title in titles]
 
 
 class HttpRequestSender:
@@ -96,12 +102,8 @@ class Executor:
         loop = asyncio.get_event_loop()
         data_resp = loop.run_until_complete(self.fetcher.fetch(data, self.http_request_sender.get))
 
-        articles = dict()
-
-        for index, data in enumerate(data_resp):
-            current_source = data[1]
-            content = self.scrapers[index].execute(data[0], keyword)
-            articles.update({current_source: content})
+        articles = {data[1]: self.scrapers[index].execute(data[0], keyword) 
+                    for index, data in enumerate(data_resp)}
 
         return articles
 

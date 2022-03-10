@@ -1,6 +1,3 @@
-from dataclasses import dataclass
-
-
 class TheGuardianConfig:
     URL = 'https://www.theguardian.com/world'
     NAME = 'the guardian'
