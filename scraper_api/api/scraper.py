@@ -6,7 +6,7 @@ from random import choice as random
 from bs4 import BeautifulSoup as bs
 
 
-from .config import TimeConfig, TheGuardianConfig, BBCConfig
+from .config import TimeConfig, TheGuardianConfig, BBCConfig, NewYorkTimesConfig
 from .user_agents import UserAgent
 
 
@@ -55,6 +55,22 @@ class BBCScraper(Scraper):
 class TheGuardianScraper(Scraper):
     def __init__(self):
         super().__init__(TheGuardianConfig.URL, TheGuardianConfig.NAME)
+  
+    def execute(self, content: str, keyword: str):
+        soup = bs(content, 'html.parser')
+        content = soup.findAll('a')
+
+        titles = set()
+
+        for title in content:
+            if keyword.lower() in title.text.lower():
+                titles.add((title.text.strip(), title['href']))
+
+        return [list(title) for title in titles]
+
+class NewYorkTimesScraper(Scraper):
+    def __init__(self):
+        super().__init__(NewYorkTimesConfig.URL, NewYorkTimesConfig.NAME)
   
     def execute(self, content: str, keyword: str):
         soup = bs(content, 'html.parser')
@@ -121,6 +137,8 @@ class ContentGetter:
         executor = Executor(
             TimeScraper(),
             BBCScraper(), 
-            TheGuardianScraper())
+            TheGuardianScraper(),
+            NewYorkTimesScraper()
+            )
 
         return executor.execute(self.keyword)

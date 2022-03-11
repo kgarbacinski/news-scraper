@@ -9,3 +9,7 @@ class BBCConfig:
 class TimeConfig:
     URL = 'https://time.com/'
     NAME = 'time'
+
+class NewYorkTimesConfig:
+    URL = 'https://www.nytimes.com/international/'
+    NAME = 'new york times'
