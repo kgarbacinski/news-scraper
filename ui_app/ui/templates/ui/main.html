@@ -1,0 +1,19 @@
+{% extends 'ui/base.html' %}
+
+{% block head %}
+<title>{{ title }}</title>
+{% endblock %}
+
+{% block content %}
+    {% for key,value in articles.items %}
+        <h2>
+            {{ key | upper }} | {{ value | length}}
+        </h2>
+        {% for item in value %} 
+            <ul>
+                <li>Header: {{ item.0 }} | <a href='{{ item.1 }}' target="_blank">More</a></li>
+            </ul>
+            {% endfor %}
+        
+    {% endfor %}
+{% endblock %}

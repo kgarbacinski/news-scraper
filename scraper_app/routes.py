@@ -10,7 +10,7 @@ def endpoint(keyword):
     getter = ContentGetter(keyword)
     result = getter.get()
     
-    if all(len(value) == 0 for value in result.values()):
-        return jsonify('No keyword found!')
+    if all(not len(value) for value in result.values()):
+        return jsonify(f'No content with keyword: {keyword}')
     else: 
         return jsonify(result) 
