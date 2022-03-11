@@ -1,5 +1,6 @@
 import asyncio
 import aiohttp
+from markupsafe import re
 import nest_asyncio
 from typing import List, Coroutine
 from random import choice as random
@@ -68,6 +69,7 @@ class TheGuardianScraper(Scraper):
 
         return [list(title) for title in titles]
 
+
 class NewYorkTimesScraper(Scraper):
     def __init__(self):
         super().__init__(NewYorkTimesConfig.URL, NewYorkTimesConfig.NAME)
@@ -99,11 +101,9 @@ class Fetcher:
         
     async def fetch(self, data, inner):
         async with aiohttp.ClientSession(headers=self.headers) as session:
-            tasks = []
-            for pair in data:
-                tasks.append(inner(session, pair))
-            
+            tasks = [inner(session, pair) for pair in data]            
             responses = await asyncio.gather(*tasks, return_exceptions=True)
+        
         return responses
         
 
@@ -125,8 +125,10 @@ class Executor:
         articles = {data[1]: self.scrapers[index].execute(data[0], keyword) 
                     for index, data in enumerate(data_resp)}
 
-        return articles
+        sorted_articles = {i[0]: i[1] 
+                    for i in sorted(articles.items(), key=lambda x:len(x[1]), reverse=True)}
 
+        return sorted_articles
 
 class ContentGetter:
     def __init__(self, keyword: str):
