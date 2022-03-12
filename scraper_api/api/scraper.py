@@ -12,7 +12,7 @@ from .user_agents import UserAgent
 
 
 class Scraper:
-    def __init__(self, url, name):
+    def __init__(self, url: str, name: str):
         self.url = url
         self.name = name
         
@@ -125,22 +125,19 @@ class Executor:
         articles = {data[1]: self.scrapers[index].execute(data[0], keyword) 
                     for index, data in enumerate(data_resp)}
 
-        sorted_articles = {i[0]: i[1] 
-                    for i in sorted(articles.items(), key=lambda x:len(x[1]), reverse=True)}
+        sorted_articles = {pair[0]: pair[1] 
+                    for pair in sorted(articles.items(), key=lambda x:len(x[1]), reverse=True)}
 
         return sorted_articles
 
 class ContentGetter:
-    def __init__(self, keyword: str):
-        self.keyword = keyword
-
-    def get(self):
-
+    @staticmethod
+    def get(keyword):
         executor = Executor(
-            TimeScraper(),
+            TimeScraper(), 
             BBCScraper(), 
-            TheGuardianScraper(),
+            TheGuardianScraper(), 
             NewYorkTimesScraper()
             )
 
-        return executor.execute(self.keyword)
+        return executor.execute(keyword)

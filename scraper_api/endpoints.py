@@ -8,11 +8,11 @@ app = FastAPI()
 
 @app.get("/get/{keyword}")
 async def endpoint(keyword: str):
-    getter = ContentGetter(keyword)
-    result = getter.get()
+    result = ContentGetter.get(keyword)
     
     if all(not len(value) for value in result.values()):
-        return {"message": f"No info found for: {keyword}!"}
+        empty_result = {"message": f"No info found for: {keyword}!"}
+        return empty_result
     else: 
         return result 
 
