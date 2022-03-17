@@ -1,6 +1,5 @@
 import asyncio
 import aiohttp
-from markupsafe import re
 import nest_asyncio
 from typing import List, Coroutine
 from random import choice as random

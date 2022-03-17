@@ -1,0 +1,33 @@
+version: '3.8'
+
+services: 
+
+  scraper_api:
+    build: ./scraper_api
+    command: uvicorn endpoints:app --host 0.0.0.0 --reload
+    volumes:
+      - ./scraper_api:/usr/src/app/
+    ports:
+      - 8004:8000
+    environment: 
+      - DEBUG=1
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+    depends_on: 
+      - redis
+  
+  
+  worker:
+      build: ./scraper_api
+      command: celery -A celery worker
+      volumes:
+        - ./scraper_api:/usr/src/app
+      environment:
+        - CELERY_BROKER_URL=redis://redis:6379/0
+        - CELERY_RESULT_BACKEND=redis://redis:6379/0
+      depends_on:
+        - scraper_api
+        - redis
+
+  redis:
+    image: redis:6-alpine
