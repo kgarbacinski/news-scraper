@@ -19,7 +19,7 @@ services:
   
   worker:
       build: ./scraper_api
-      command: celery -A celery worker
+      command: python3 -m celery -A computing.tasks.celery_app worker --loglevel=DEBUG
       volumes:
         - ./scraper_api:/usr/src/app
       environment:

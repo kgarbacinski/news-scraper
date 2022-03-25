@@ -3,7 +3,7 @@ from fastapi.responses import JSONResponse
 from celery.result import AsyncResult
 from pydantic import BaseModel
 
-from scraper_api.computing.celery import CustomTask
+from computing.tasks import scraper_task
 
 app = FastAPI()
 
@@ -18,8 +18,8 @@ app = FastAPI()
 
 @app.get("/new_task/{keyword}", status_code=201)
 def run_task(keyword: str):
-    task = CustomTask.delay(keyword)
-    print(task.id)
+    task = scraper_task.delay(keyword)
+    
     return JSONResponse({"task_id": task.id})
 
 @app.get("/tasks/{task_id}")

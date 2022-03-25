@@ -26,13 +26,16 @@ class TimeScraper(Scraper):
         soup = bs(content, 'html.parser')
         content = soup.findAll('h3')
         
-        titles = set()
+        try:
+            titles = set()
+            for title in content:
+                if keyword.lower() in title.text.lower():
+                    titles.add((title.text.strip(), 'https://time.com/' + title.find_parent('a')['href']))
 
-        for title in content:
-            if keyword.lower() in title.text.lower():
-                titles.add((title.text.strip(), 'https://time.com/' + title.find_parent('a')['href']))
+            return [list(title) for title in titles]
 
-        return [list(title) for title in titles]
+        except TypeError: 
+            return [] 
 
 
 class BBCScraper(Scraper):
@@ -43,13 +46,16 @@ class BBCScraper(Scraper):
         soup = bs(content, 'html.parser')
         content = soup.findAll('h3')
 
-        titles = set()
+        try:
+            titles = set()
+            for title in content:
+                if keyword.lower() in title.text.lower():
+                    titles.add((title.text.strip(), 'https://www.bbc.com' + title.find_parent('a')['href']))
 
-        for title in content:
-            if keyword.lower() in title.text.lower():
-                titles.add((title.text.strip(), 'https://www.bbc.com' + title.find_parent('a')['href']))
-
-        return [list(title) for title in titles]
+            return [list(title) for title in titles]
+        
+        except TypeError: 
+            return [] 
 
 
 class TheGuardianScraper(Scraper):
@@ -60,13 +66,16 @@ class TheGuardianScraper(Scraper):
         soup = bs(content, 'html.parser')
         content = soup.findAll('a')
 
-        titles = set()
+        try:
+            titles = set()
+            for title in content:
+                if keyword.lower() in title.text.lower():
+                    titles.add((title.text.strip(), title['href']))
 
-        for title in content:
-            if keyword.lower() in title.text.lower():
-                titles.add((title.text.strip(), title['href']))
-
-        return [list(title) for title in titles]
+            return [list(title) for title in titles]
+        
+        except TypeError: 
+            return [] 
 
 
 class NewYorkTimesScraper(Scraper):
@@ -77,13 +86,16 @@ class NewYorkTimesScraper(Scraper):
         soup = bs(content, 'html.parser')
         content = soup.findAll('a')
 
-        titles = set()
+        try:
+            titles = set()
+            for title in content:
+                if keyword.lower() in title.text.lower():
+                    titles.add((title.text.strip(), title['href']))
 
-        for title in content:
-            if keyword.lower() in title.text.lower():
-                titles.add((title.text.strip(), title['href']))
+            return [list(title) for title in titles]
 
-        return [list(title) for title in titles]
+        except TypeError: 
+            return [] 
 
 
 class HttpRequestSender:
@@ -136,7 +148,6 @@ class ContentGetter:
             TimeScraper(), 
             BBCScraper(), 
             TheGuardianScraper(), 
-            NewYorkTimesScraper()
-            )
+            NewYorkTimesScraper())
 
         return executor.execute(keyword)
