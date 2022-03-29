@@ -148,6 +148,9 @@ class ContentGetter:
             TimeScraper(), 
             BBCScraper(), 
             TheGuardianScraper(), 
-            NewYorkTimesScraper())
+            NewYorkTimesScraper()
+        )
 
-        return executor.execute(keyword)
+        data = {keyword: executor.execute(keyword)}
+
+        return data
