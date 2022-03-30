@@ -16,8 +16,8 @@ services:
       - CELERY_RESULT_BACKEND=redis://redis:6379/0
     depends_on: 
       - redis
-  
-  
+
+
   worker:
       build: ./scraper_app
       command: python3 -m celery -A computing.tasks.celery_app worker #--loglevel=DEBUG
@@ -29,6 +29,7 @@ services:
       depends_on:
         - scraper-app
         - redis
+
 
   redis:
     image: redis:6-alpine
@@ -44,3 +45,17 @@ services:
       - 8005:8000
     depends_on:
       - scraper-app
+  
+
+  ui-app:
+    build: ./ui_app
+    entrypoint: [ "/bin/sh","-c" ]
+    command:
+      - |
+        python3 manage.py makemigrations
+        python3 manage.py migrate && python3 manage.py migrate --run-syncdb
+        python3 manage.py runserver localhost:8000
+    ports:
+      - 8006:8000
+
+
