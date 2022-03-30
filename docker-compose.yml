@@ -2,11 +2,12 @@ version: '3.8'
 
 services: 
 
-  scraper_api:
-    build: ./scraper_api
-    command: uvicorn endpoints:app --host 0.0.0.0 --reload
+  scraper-app:
+    build: ./scraper_app
+    command: uvicorn app.endpoints:app --host 0.0.0.0 --reload
+    hostname: scraper-api
     volumes:
-      - ./scraper_api:/usr/src/app/
+      - ./scraper_app:/usr/src/app/
     ports:
       - 8004:8000
     environment: 
@@ -18,27 +19,28 @@ services:
   
   
   worker:
-      build: ./scraper_api
+      build: ./scraper_app
       command: python3 -m celery -A computing.tasks.celery_app worker #--loglevel=DEBUG
       volumes:
-        - ./scraper_api:/usr/src/app
+        - ./scraper_app:/usr/src/app
       environment:
         - CELERY_BROKER_URL=redis://redis:6379/0
         - CELERY_RESULT_BACKEND=redis://redis:6379/0
       depends_on:
-        - scraper_api
+        - scraper-app
         - redis
 
   redis:
     image: redis:6-alpine
 
-    
-  history_app:
+
+  history-app:
     build: ./history_app
-    command: uvicorn endpoints:app --host 0.0.0.0 --reload
+    command: uvicorn app.endpoints:app --host 0.0.0.0 --reload
+    hostname: history-app
     volumes:
       - ./history_app:/usr/src/app/
     ports:
       - 8005:8000
     depends_on:
-      - scraper_api
+      - scraper-app

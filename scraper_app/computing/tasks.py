@@ -1,9 +1,9 @@
-from api.scraper import ContentGetter
-
-from .celeryconfig import Config
 from celery import Celery, Task
 from typing import Dict
 
+from scraper.scraper import ContentGetter
+from .celeryconfig import Config
+from app.history_handler import HistoryHandler
 
 class ScrappingTask(Task):
     name = 'scrapping_task'
@@ -13,18 +13,20 @@ class ScrappingTask(Task):
         result: Dict = None
 
         if all(not len(value) for value in data.values()):
-            result = {"message": f"No info found for: {keyword}!"}
+            result = {"message": f"No info found for this keyword: {keyword}!"}
         else:
             result = data
 
         return result
 
     def on_success(self, retval, task_id, args, kwargs):
-        celery_task_id = task_id
+        task_id = task_id
         keyword = args[0]
-        scrapped_data = list(retval.values())[0]
+        scraped_data = list(retval.values())[0]
 
-        print(f"{celery_task_id} | {keyword} | {scrapped_data}")
+        handler = HistoryHandler(task_id, keyword, scraped_data)
+        
+        return handler.add_new_record()
 
 
 celery_app = Celery(__name__)
