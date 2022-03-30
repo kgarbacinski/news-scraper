@@ -57,5 +57,8 @@ services:
         python3 manage.py runserver 0.0.0.0:8000
     ports:
       - 8006:8000
+    depends_on:
+      - scraper-app
+      - history-app
 
 
