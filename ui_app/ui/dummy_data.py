@@ -1,4 +1,8 @@
-DUMMY_DATA = {
+from multiprocessing import dummy
+
+
+DUMMY_DATA = {'keyword': 'ukraine',
+ 'articles': {
     "bbc": [
         [
             "Lorry drivers' 1,300-mile trip with Ukraine aid",
@@ -151,4 +155,11 @@ DUMMY_DATA = {
             "https://time.com//6155863/putin-threat-baltic-states/"
         ]
     ]
-}
+}}
+
+new_dict = dict()
+
+data = DUMMY_DATA.get('articles')
+
+for key, value in data.items():
+    new_dict.update({key: len(value)})

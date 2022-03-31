@@ -4,10 +4,8 @@ from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 import json
 
-
 from db import models, schemas
-from db.database import SessionLocal, engine
-from db.database import get_db
+from db.database import get_db, engine
 
 models.Base.metadata.create_all(bind=engine)
 
@@ -15,7 +13,7 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["http://localhost:8000"],
     allow_methods=["GET", "POST"],
     allow_headers=["*"],
     )

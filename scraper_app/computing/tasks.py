@@ -22,9 +22,12 @@ class ScrappingTask(Task):
     def on_success(self, retval, task_id, args, kwargs):
         task_id = task_id
         keyword = args[0]
-        scraped_data = list(retval.values())[0]
+        scraped_data = retval
 
-        handler = HistoryHandler(task_id, keyword, scraped_data)
+        num_of_articles = {source: len(articles) 
+            for source, articles in scraped_data.get('articles').items()}
+
+        handler = HistoryHandler(task_id, keyword, num_of_articles)
         
         return handler.add_new_record()
 

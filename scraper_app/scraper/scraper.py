@@ -151,6 +151,9 @@ class ContentGetter:
             NewYorkTimesScraper()
         )
 
-        data = {keyword: executor.execute(keyword)}
+        data = {
+            'keyword': keyword,
+            'articles': executor.execute(keyword)
+            }
 
         return data
