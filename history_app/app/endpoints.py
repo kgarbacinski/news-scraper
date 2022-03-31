@@ -1,26 +1,43 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends
+from sqlalchemy.orm import Session
 from fastapi.responses import JSONResponse
-from pydantic import BaseModel
+from fastapi.middleware.cors import CORSMiddleware
 import json
+
+
+from db import models, schemas
+from db.database import SessionLocal, engine
+from db.database import get_db
+
+models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
-class Record(BaseModel):
-    task_id: str
-    keyword: str
-    content: str
-    timestamp: str
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["GET", "POST"],
+    allow_headers=["*"],
+    )
 
 
-@app.post("/new_record")
-def add_new_record(record: Record):
-    return JSONResponse({
-        'task_id': record.task_id,
-        'keyword': record.keyword,
-        'content': json.loads(record.content),
-        'timestamp': record.timestamp
-    })
+@app.post("/new_record", response_model=schemas.Record)
+def add_new_record(data: schemas.Record, db: Session = Depends(get_db)):
+    new_record = models.Record(
+        task_id = data.task_id, 
+        keyword = data.keyword, 
+        content = str(json.loads(data.content)), 
+        timestamp = data.timestamp
+    )
 
+    db.add(new_record)
+    db.commit()
+
+    return JSONResponse({'status': 'History updated!'})
+
+    
 @app.get('/records')
-def get_records():
-    pass
+def get_records(db: Session = Depends(get_db)):
+    all_records = db.query(models.Record).all()
+
+    return all_records
