@@ -24,10 +24,15 @@ class ScrappingTask(Task):
         keyword = args[0]
         scraped_data = retval
 
-        num_of_articles = {source: len(articles) 
-            for source, articles in scraped_data.get('articles').items()}
+        if 'message' in scraped_data.keys():
+            content = scraped_data
+        else: 
+            content = {
+                source: len(articles) 
+                for source, articles in scraped_data.get('articles').items()
+                }
 
-        handler = HistoryHandler(task_id, keyword, num_of_articles)
+        handler = HistoryHandler(task_id, keyword, content)
         
         return handler.add_new_record()
 
