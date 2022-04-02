@@ -13,7 +13,7 @@ def insert_task(keyword: str):
     
     return JSONResponse({"task_id": task.id})
 
-@app.get("/current_task/{task_id}", status_code=200)
+@app.get("/tasks/{task_id}", status_code=200)
 def check_task(task_id):
     task_result = AsyncResult(task_id)
     result = {
