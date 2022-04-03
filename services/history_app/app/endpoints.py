@@ -34,7 +34,7 @@ def add_new_record(data: schemas.Record, db: Session = Depends(get_db)):
     return JSONResponse({'status': 'History updated!'})
 
     
-@app.get('/records')
+@app.get('/history')
 def get_records(db: Session = Depends(get_db)):
     all_records = db.query(models.Record).all()
 
