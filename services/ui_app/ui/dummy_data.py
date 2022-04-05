@@ -1,6 +1,3 @@
-from multiprocessing import dummy
-
-
 DUMMY_DATA = {'keyword': 'ukraine',
  'articles': {
     "bbc": [
@@ -156,10 +153,3 @@ DUMMY_DATA = {'keyword': 'ukraine',
         ]
     ]
 }}
-
-new_dict = dict()
-
-data = DUMMY_DATA.get('articles')
-
-for key, value in data.items():
-    new_dict.update({key: len(value)})

@@ -1,11 +1,18 @@
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
+from fastapi.middleware.cors import CORSMiddleware
 from celery.result import AsyncResult
 
 from computing.tasks import ScrappingTask
 
 app = FastAPI()
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["GET"],
+    allow_headers=["*"],
+    )
 
 @app.get("/new_task/{keyword}", status_code=201)
 def insert_task(keyword: str):

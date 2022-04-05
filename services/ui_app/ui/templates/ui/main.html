@@ -1,19 +1,21 @@
 {% extends 'ui/base.html' %}
+{% load static %}
 
 {% block head %}
 <title>{{ title }}</title>
 {% endblock %}
 
 {% block content %}
-    {% for key,value in articles.items %}
-        <h2>
-            {{ key | upper }} | {{ value | length}}
-        </h2>
-        {% for item in value %} 
-            <ul>
-                <li>Header: {{ item.0 }} | <a href='{{ item.1 }}' target="_blank">More</a></li>
-            </ul>
-            {% endfor %}
-        
+    {% for data in articles.values %}
+        {% for key, value in data.items %}
+            <h2>
+                {{ key | upper }} | {{ value | length}}
+            </h2>
+            {% for item in value %} 
+                <ul>
+                    <li>Header: {{ item.0 }} | <a href='{{ item.1 }}' target="_blank">More</a></li>
+                </ul>
+            {% endfor %}   
+        {% endfor %}
     {% endfor %}
 {% endblock %}
