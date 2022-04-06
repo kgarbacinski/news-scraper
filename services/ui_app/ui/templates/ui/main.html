@@ -6,6 +6,7 @@
 {% endblock %}
 
 {% block content %}
+<div id='dummy_content'>
     {% for data in articles.values %}
         {% for key, value in data.items %}
             <h2>
@@ -18,4 +19,7 @@
             {% endfor %}   
         {% endfor %}
     {% endfor %}
+</div>
+<div id='content'>
+</div>
 {% endblock %}

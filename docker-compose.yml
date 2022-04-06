@@ -1,16 +1,21 @@
 version: '3.8'
 
+networks:
+  services-network:
+    driver: bridge
+
 services: 
 
   scraper-app:
     build: services/scraper_app
     command: uvicorn app.endpoints:app --host 0.0.0.0 --port 8000 --reload
-    hostname: scraper-app
     container_name: scraper-app 
     volumes:
       - ./services/scraper_app:/usr/src/app/
     ports:
       - 8004:8000
+    networks:
+      - services-network
     environment: 
       - DEBUG=1
       - CELERY_BROKER_URL=redis://redis:6379/0
@@ -24,6 +29,8 @@ services:
       command: python3 -m celery -A computing.tasks.celery_app worker #--loglevel=DEBUG
       volumes:
         - ./services/scraper_app:/usr/src/app
+      networks:
+        - services-network
       environment:
         - CELERY_BROKER_URL=redis://redis:6379/0
         - CELERY_RESULT_BACKEND=redis://redis:6379/0
@@ -31,9 +38,10 @@ services:
         - scraper-app
         - redis
 
-
   redis:
     image: redis:6-alpine
+    networks:
+      - services-network
 
 
   history-app:
@@ -47,12 +55,13 @@ services:
       - 8005:8000
     depends_on:
       - scraper-app
+    networks:
+      - services-network
   
 
   ui-app:
     build: services/ui_app
     entrypoint: [ "/bin/sh","-c" ]
-    hostname: ui-app
     container_name: ui-app 
     command:
       - |
@@ -64,5 +73,5 @@ services:
     depends_on:
       - scraper-app
       - history-app
-
-
+    networks:
+      - services-network
