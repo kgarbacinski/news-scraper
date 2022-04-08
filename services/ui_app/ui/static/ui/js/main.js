@@ -81,7 +81,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     function addWaitingMessage() {
-        contentDiv.innerHTML = "<div class='waiting_message'>fetching....</div>";
+        contentDiv.innerHTML = "<div class='loader'>fetching....</div>";
     }
 
     function runQuery() {
