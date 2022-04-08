@@ -6,20 +6,10 @@
 {% endblock %}
 
 {% block content %}
-<div id='dummy_content'>
-    {% for data in articles.values %}
-        {% for key, value in data.items %}
-            <h2>
-                {{ key | upper }} | {{ value | length}}
-            </h2>
-            {% for item in value %} 
-                <ul>
-                    <li>Header: {{ item.0 }} | <a href='{{ item.1 }}' target="_blank">More</a></li>
-                </ul>
-            {% endfor %}   
-        {% endfor %}
-    {% endfor %}
-</div>
-<div id='content'>
+<form id='form' method="POST">
+    <input name='keyword' id='keyword' type="text" placeholder="some text">
+    <button type="submit" id="button">Find</button>
+</form>
+<div id='scraped_content'>
 </div>
 {% endblock %}
