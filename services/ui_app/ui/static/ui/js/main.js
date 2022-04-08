@@ -57,20 +57,23 @@ document.addEventListener("DOMContentLoaded", function () {
     function renderContent(data) {
         let content = data.articles;
         let query = data.keyword;
-        
-        for (key in content) {
-            let articles_array = content[key]
 
-            for (i = 0; i < articles_array.length; i++) {
-                let title = articles_array[i][0];
-                let link = articles_array[i][1];
+        for (key in content) {
+            contentDiv.innerHTML += `
+            <div class='sources_list'>
+                <span class='source_header'>${key.toUpperCase()} | ${content[key].length}</span>
+            </div>
+            `
+
+            for (i = 0; i < content[key].length; i++) {
+                let title = content[key][i][0];
+                let link = content[key][i][1];
 
                 contentDiv.innerHTML += `
-                <div class='source_data'>
-                    <span class='source_header'>${key.toUpperCase()} | ${articles_array.length}</span>
-                    <ul>
-                        <li><span class='article_title'>${title}</span>: <a href='${link}' target='_blank'>more</a></li>
-                    </ul>
+                <div class='articles_list'>
+                <ul>
+                    <li><span class='article_title'>${title}</span>: <a href='${link}' target='_blank'>more</a></li>
+                </ul>
                 </div>
                 `
             }
