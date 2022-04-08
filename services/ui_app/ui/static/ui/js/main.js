@@ -36,6 +36,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function getContent(task_id) {
+        addWaitingMessage(); 
         setTimeout(async function () {
             let url = `${window.location.protocol}//${window.location.hostname}:8004/tasks/${task_id}`
             let response = await fetchData(url);
@@ -43,20 +44,20 @@ document.addEventListener("DOMContentLoaded", function () {
             let content = response.content;
 
             if (task_status == 'SUCCESS') {
-                console.log('Content is ready!');
-                console.log(content);
+                clearContent();
+                console.log('Data is ready!');
                 renderContent(content);
                 return
             } else {
-                console.log('Checking for content...');
+                console.log('Checking for data...');
             }
             getContent(task_id);
-        }, 100)
+        }, 500)
     }
 
     function renderContent(data) {
         let content = data.articles;
-        let query = data.keyword;
+//        let query = data.keyword;
 
         for (key in content) {
             contentDiv.innerHTML += `
@@ -80,14 +81,19 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    function removeContent() {
+    function clearContent() {
         contentDiv.innerHTML = '';
     }
+
+
+    function addWaitingMessage() {
+        contentDiv.innerHTML = "<div class='waiting_message'>fetching....</div>";
+    } 
 
     function runQuery() {
         form.addEventListener('submit', function (e) {
             e.preventDefault();
-            removeContent();
+            clearContent();
 
             const keyword = input.value;
             console.log(`input: ${keyword}`);
