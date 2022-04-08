@@ -1,15 +1,12 @@
 import os
+from django.template import engine
 
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-DATABASE_URL = "sqlite:///./test.db"
-
-engine = create_engine(
-    # connect args only for sqlite for testing then could be removed
-    DATABASE_URL, connect_args={"check_same_thread": False}
-)
+DATABASE_URL = "postgresql://postgres:postgres@history-db/history_db"
+engine = create_engine(DATABASE_URL)
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
