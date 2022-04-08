@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", function () {
             <tr>
               <td>${timestamp}</td>
               <td>${keyword}</td>
-              <td>${content}</td>
+              <td><span style='white-space: pre-wrap'>${content}</span></td>
               <td>${backend_task_id}</td>
             </tr>
           </table>

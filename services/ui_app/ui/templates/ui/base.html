@@ -11,6 +11,8 @@
     {% endblock %}
     </head>
     <body>
+        <a href='{% url "home-view" %}'>Home</a>
+        <a href='{% url "history-view" %}'>History</a>
         {% block content %}
         {% endblock %}
     </body>
