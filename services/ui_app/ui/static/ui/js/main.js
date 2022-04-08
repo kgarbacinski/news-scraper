@@ -6,23 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const input = document.getElementById('keyword')
 
 
-    async function insertTask(keyword) {
-        const endpoint = `${window.location.protocol}//${window.location.hostname}:8004/new_task/${keyword}`;
-        let response = await fetch(endpoint, {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json',
-                'X-Requested-With': 'XMLHttpRequest',
-                'X-CSRFToken': csrfToken
-            }
-        });
-        let data = await response.json();
-
-        console.log('task added!');
-        return data['task_id'];
-    }
-
-    async function fetchData(url) {
+    async function fetcher(url) {
         let response = await fetch(url, {
             method: 'GET',
             headers: {
@@ -31,15 +15,25 @@ document.addEventListener("DOMContentLoaded", function () {
                 'X-CSRFToken': csrfToken
             }
         })
-        let result = await response.json()
+        let result = await response.json();
+        
         return result
     }
 
+    async function insertTask(keyword) {
+        const endpoint = `${window.location.protocol}//${window.location.hostname}:8004/new_task/${keyword}`;
+        let data = await fetcher(endpoint);
+
+        console.log('task added!');
+        return data['task_id']
+    }
+
     function getContent(task_id) {
-        addWaitingMessage(); 
+        addWaitingMessage();
+
         setTimeout(async function () {
             let url = `${window.location.protocol}//${window.location.hostname}:8004/tasks/${task_id}`
-            let response = await fetchData(url);
+            let response = await fetcher(url);
             let task_status = response.task_status;
             let content = response.content;
 
@@ -57,7 +51,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function renderContent(data) {
         let content = data.articles;
-//        let query = data.keyword;
+        let query = data.keyword;
 
         for (key in content) {
             contentDiv.innerHTML += `
@@ -88,7 +82,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function addWaitingMessage() {
         contentDiv.innerHTML = "<div class='waiting_message'>fetching....</div>";
-    } 
+    }
 
     function runQuery() {
         form.addEventListener('submit', function (e) {
