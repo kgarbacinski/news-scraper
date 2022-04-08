@@ -63,9 +63,9 @@ services:
     image: postgres:13-alpine
     container_name: history-db
     environment:
-      - POSTGRES_DB=history_db
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+      POSTGRES_DB: "${DB}"
+      POSTGRES_USER: "${DB_USER}"
+      POSTGRES_PASSWORD: "${PASSWORD}"
     expose:
       - 5432
     networks:
@@ -76,7 +76,8 @@ services:
     build: services/ui_app
     entrypoint: [ "/bin/sh","-c" ]
     container_name: ui-app 
-    command: python3 manage.py runserver 0.0.0.0:8000
+    command: 
+      - python3 manage.py runserver 0.0.0.0:8000
     ports:
       - 8006:8000
     depends_on:

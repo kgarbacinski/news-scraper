@@ -1,4 +1,3 @@
-import os
 from django.template import engine
 
 from sqlalchemy import create_engine
