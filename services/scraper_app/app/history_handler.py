@@ -1,6 +1,5 @@
 from datetime import datetime
 import requests
-import json
 
 class HistoryHandler:
     def __init__(self, task_id, keyword, scraped_data):
@@ -15,7 +14,7 @@ class HistoryHandler:
         payload = {
             'task_id': self.task_id,
             'keyword': self.keyword,
-            'content': json.dumps(self.scraped_data),
+            'content': self.scraped_data,
             'timestamp': self.timestamp
         }
 

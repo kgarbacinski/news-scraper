@@ -20,6 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const url = `${window.location.protocol}//${window.location.hostname}:8005/records`;
         let data = await fetcher(url); 
 
+        console.log('data loaded!')
         return data;
     }
 
@@ -27,7 +28,7 @@ document.addEventListener("DOMContentLoaded", function () {
     function renderHistory(data) {
         for (i = 0; i < data.length; i++) {
             let record = data[i];
-            let content = record['content'].replace(/^"+|"+$/g, '{');
+            let content= record['content'];
             let timestamp = record['timestamp'];
             let backend_task_id = record['task_id'];
             let keyword = record['keyword'];

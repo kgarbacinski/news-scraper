@@ -26,11 +26,16 @@ class ScrappingTask(Task):
 
         if 'message' in scraped_data.keys():
             content = scraped_data
-        else: 
-            content = {
-                source: len(articles) 
-                for source, articles in scraped_data.get('articles').items()
-                }
+        else:
+            content = ''
+
+            for source, articles in scraped_data.get('articles').items():
+                content += f"{source}: {len(articles)}\n"
+
+            # content = {
+            #     source: len(articles) 
+            #     for source, articles in scraped_data.get('articles').items()
+            #     }
 
         handler = HistoryHandler(task_id, keyword, content)
         
