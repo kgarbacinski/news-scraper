@@ -8,7 +8,8 @@ document.addEventListener("DOMContentLoaded", function () {
             headers: {
                 'Accept': 'application/json',
                 'X-Requested-With': 'XMLHttpRequest',
-                'X-CSRFToken': csrfToken
+                'X-CSRFToken': csrfToken,
+                'Authorization': `Bearer ${readAPITokenFromLocalStorage()}` 
             }
         })
         let result = await response.json();
@@ -70,6 +71,12 @@ document.addEventListener("DOMContentLoaded", function () {
             };
         };
         return cookieValue;
+    }
+
+    function readAPITokenFromLocalStorage() {
+        token = window.localStorage.getItem('auth_token');
+
+        return token
     }
 
     main();

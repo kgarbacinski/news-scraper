@@ -1,5 +1,6 @@
 from datetime import datetime
 import requests
+from decouple import config
 
 class HistoryHandler:
     def __init__(self, task_id, keyword, scraped_data):
@@ -10,7 +11,11 @@ class HistoryHandler:
 
     def add_new_record(self):
         URL = 'http://history-app:8000/new_record'
-        headers = {'Content-type': 'application/json'}
+        API_TOKEN = config('AUTH_TOKEN')
+        headers = {
+            'Content-type': 'application/json',
+            'Authorization': f'Bearer {API_TOKEN}'
+            }
         payload = {
             'task_id': self.task_id,
             'keyword': self.keyword,
