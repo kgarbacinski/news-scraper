@@ -12,9 +12,9 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["http://localhost", "http://localhost:8006"],
     allow_methods=["GET"],
-    allow_headers=["*"],
+    allow_headers=["Accept", "X-Requested-With", "X-CSRFToken", "Authorization"],
     )
 
 @app.get("/new_task/{keyword}", dependencies=[Depends(JWTBearer())], status_code=200)
