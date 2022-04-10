@@ -5,9 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.auth.auth_bearer import JWTBearer
 from db import models, schemas
-from db.database import get_db, engine
-
-models.Base.metadata.create_all(bind=engine)
+from db.database import get_db
 
 app = FastAPI()
 
