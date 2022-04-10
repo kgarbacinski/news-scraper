@@ -18,6 +18,10 @@ app.add_middleware(
     allow_headers=["Accept", "X-Requested-With", "X-CSRFToken", "Authorization"],
     )
 
+@app.get("/", status_code=200)
+def main_route():
+    return 'Ok!'    
+
 @app.get("/new_task/{keyword}", dependencies=[Depends(JWTBearer())], status_code=200)
 def insert_task(keyword: str):
     task = ScrappingTask().delay(keyword)
