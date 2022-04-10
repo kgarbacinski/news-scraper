@@ -18,6 +18,9 @@ app.add_middleware(
     allow_headers=["Accept", "X-Requested-With", "X-CSRFToken", "Authorization"],
     )
 
+@app.get("/", status_code=200)
+def main_route():
+    return 'Ok!'    
 
 @app.post("/new_record", response_model=schemas.Record, dependencies=[Depends(JWTBearer())])
 def add_new_record(data: schemas.Record, db: Session = Depends(get_db)):

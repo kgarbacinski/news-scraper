@@ -1,0 +1,1 @@
+[![CI & Tests](https://github.com/dyeroshenko/news-scraper/actions/workflows/main.yml/badge.svg)](https://github.com/dyeroshenko/news-scraper/actions/workflows/main.yml)

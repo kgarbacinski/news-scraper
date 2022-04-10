@@ -29,12 +29,14 @@ jobs:
         with:
           python-version: "3.10"
 
-      - name: Install scraper_app dependencies
+      - name: Install scraper_app dependencies & run tests
         run: |
           python -m pip install --upgrade pip
-          pip install pytest docker-compose
           pip install -r ./services/scraper_app/requirements.txt
-
-      - name: Run scraper_app tests
-        run: | 
           python -m pytest ./services/scraper_app/app/tests/main_test.py
+
+      - name: Install history_app dependencies & run tests
+        run: | 
+          python -m pip install --upgrade pip
+          pip install -r ./services/history_app/requirements.txt
+          python -m pytest ./services/history_app/app/tests/main_test.py
