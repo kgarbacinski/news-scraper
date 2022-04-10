@@ -27,6 +27,6 @@ app.dependency_overrides[get_db] = override_get_db
 
 client = TestClient(app)
 
-def test_read_main():
+def test_app_is_ready():
     response = client.get("/")
     assert response.status_code == 200
