@@ -36,7 +36,7 @@ jobs:
 
       - name: Run docker-compose
         run: | 
-          docker-compose -f docker-compose-test.yml up -d
+          docker-compose -f docker-compose-test.yml up
           curl localhost:8006
 
       - name: Open container with app
