@@ -3,8 +3,8 @@ import jwt
 from decouple import config
 import os
 
-JWT_SECRET = config('SCRAPER_APP_JWT_SECRET', os.environ['SCRAPER_APP_JWT_SECRET'])
-JWT_ALG = config('SCRAPER_APP_JWT_ALGORITHM', os.environ['SCRAPER_APP_JWT_ALGORITHM'])
+JWT_SECRET = config('JWT_SECRET', os.environ['JWT_SECRET'])
+JWT_ALG = config('JWT_ALGORITHM', os.environ['JWT_ALGORITHM'])
 
 def token_response(token: str):
     return {

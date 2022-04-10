@@ -20,8 +20,8 @@ services:
       - DEBUG=1
       - CELERY_BROKER_URL=redis://redis:6379/0
       - CELERY_RESULT_BACKEND=redis://redis:6379/0
-      - SCRAPER_APP_JWT_SECRET
-      - SCRAPER_APP_JWT_ALGORITHM
+      - JWT_SECRET
+      - JWT_ALGORITHM
       - SCRAPER_APP_ADMIN_LOGIN
       - SCRAPER_APP_ADMIN_PASSWORD
       - API_AUTH_TOKEN
@@ -60,8 +60,8 @@ services:
     ports:
       - 8005:8000
     environment:
-      - HISTORY_APP_JWT_SECRET
-      - HISTORY_APP_JWT_ALGORITHM
+      - JWT_SECRET
+      - JWT_ALGORITHM
     depends_on:
       - history-db
     networks:
