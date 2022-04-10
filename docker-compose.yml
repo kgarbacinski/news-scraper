@@ -20,6 +20,11 @@ services:
       - DEBUG=1
       - CELERY_BROKER_URL=redis://redis:6379/0
       - CELERY_RESULT_BACKEND=redis://redis:6379/0
+      - SCRAPER_APP_JWT_SECRET
+      - SCRAPER_APP_JWT_ALGORITHM
+      - SCRAPER_APP_ADMIN_LOGIN
+      - SCRAPER_APP_ADMIN_PASSWORD
+      - API_AUTH_TOKEN
     depends_on: 
       - redis
 
@@ -34,6 +39,7 @@ services:
       environment:
         - CELERY_BROKER_URL=redis://redis:6379/0
         - CELERY_RESULT_BACKEND=redis://redis:6379/0
+        - API_AUTH_TOKEN
       depends_on:
         - scraper-app
         - redis
@@ -53,6 +59,9 @@ services:
       - ./services/history_app:/usr/src/app/
     ports:
       - 8005:8000
+    environment:
+      - HISTORY_APP_JWT_SECRET
+      - HISTORY_APP_JWT_ALGORITHM
     depends_on:
       - history-db
     networks:
@@ -63,9 +72,9 @@ services:
     image: postgres:13-alpine
     container_name: history-db
     environment:
-      POSTGRES_DB: "${DB}"
-      POSTGRES_USER: "${DB_USER}"
-      POSTGRES_PASSWORD: "${PASSWORD}"
+      POSTGRES_DB: "${HISTORY_APP_DB}"
+      POSTGRES_USER: "${HISTORY_APP_DB_USER}"
+      POSTGRES_PASSWORD: "${HISTORY_APP_DB_PASSWORD}"
     expose:
       - 5432
     networks:

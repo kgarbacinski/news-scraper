@@ -3,6 +3,7 @@ from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from celery.result import AsyncResult
 from decouple import config
+import os
 
 from computing.tasks import ScrappingTask
 from app.auth.auth_bearer import JWTBearer
@@ -36,7 +37,8 @@ def check_task(task_id: str):
 
 @app.get('/utils/auth_token/{login}/{password}', status_code=200)
 def generate_token(login: str, password: str):
-    if login == config('ADMIN_LOGIN') and password == config('ADMIN_PASSWORD'):
+    if (login == config('SCRAPER_APP_ADMIN_LOGIN', os.environ['SCRAPER_APP_ADMIN_LOGIN']) 
+    and password == config('SCRAPER_APP_ADMIN_PASSWORD', os.environ['SCRAPER_APP_ADMIN_PASSWORD'])):
         return generate_JWT()
     else:
         return 'Incorrect admin credentials!'

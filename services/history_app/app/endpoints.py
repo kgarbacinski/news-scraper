@@ -4,7 +4,6 @@ from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.auth.auth_bearer import JWTBearer
-from app.auth.auth_handler import generate_JWT
 from db import models, schemas
 from db.database import get_db, engine
 

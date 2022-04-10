@@ -1,9 +1,10 @@
 import time
 import jwt
 from decouple import config
+import os
 
-JWT_SECRET = config('SECRET')
-JWT_ALG = config('ALGORITHM')
+JWT_SECRET = config('SCRAPER_APP_JWT_SECRET', os.environ['SCRAPER_APP_JWT_SECRET'])
+JWT_ALG = config('SCRAPER_APP_JWT_ALGORITHM', os.environ['SCRAPER_APP_JWT_ALGORITHM'])
 
 def token_response(token: str):
     return {

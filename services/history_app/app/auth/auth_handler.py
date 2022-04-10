@@ -1,8 +1,9 @@
 import jwt
 from decouple import config
+import os
 
-JWT_SECRET = config('SECRET')
-JWT_ALG = config('ALGORITHM')
+JWT_SECRET = config('HISTORY_APP_JWT_SECRET', os.environ['HISTORY_APP_JWT_SECRET'])
+JWT_ALG = config('HISTORY_APP_JWT_ALGORITHM', os.environ['HISTORY_APP_JWT_ALGORITHM'])
 
 def token_response(token: str):
     return {
