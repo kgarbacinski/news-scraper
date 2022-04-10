@@ -4,8 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const contentDiv = document.getElementById('scraped_content');
     const form = document.getElementById('form');
     const input = document.getElementById('keyword')
-    const APIToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHBpcmVzIjoyNjQ5NTQ0MTg2LjY5OTE3MX0.5uBK29JEHIIcQVGAriWMZPcjn_WARUcLtYO5E8-5S-Y';
-
+    
 
     async function fetcher(url) {
         let response = await fetch(url, {
@@ -119,16 +118,11 @@ document.addEventListener("DOMContentLoaded", function () {
         return cookieValue;
     };
 
-    function saveAPITokenToLocalStorage(token) {
-        window.localStorage.setItem('auth_token', token);
-    }
-
     function readAPITokenFromLocalStorage() {
         token = window.localStorage.getItem('auth_token');
 
         return token
     }
 
-    saveAPITokenToLocalStorage(APIToken);
     runQuery();
 });

@@ -89,6 +89,8 @@ services:
       - python3 manage.py runserver 0.0.0.0:8000
     ports:
       - 8006:8000
+    environment:
+      - API_AUTH_TOKEN
     depends_on:
       - scraper-app
       - history-app
