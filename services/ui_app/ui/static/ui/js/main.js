@@ -100,7 +100,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     async function startScraping(keyword) {
         let task_id = await insertTask(keyword);
-        getContent(task_id);
+        return getContent(task_id);
     }
 
     function generateCookie(name) {
@@ -120,7 +120,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function readAPITokenFromLocalStorage() {
         token = window.localStorage.getItem('auth_token');
-
         return token
     }
 
