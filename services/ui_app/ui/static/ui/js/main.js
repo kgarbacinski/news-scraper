@@ -56,8 +56,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
         for (key in content) {
             contentDiv.innerHTML += `
-            <div class='sources_list'>
-                <span class='source_header'>${key.toUpperCase()} | ${content[key].length}</span>
+            <div class='source'>
+                <span class='source_header'>${key.toUpperCase()}: <span class='color'>${content[key].length}</span></span>
             </div>
             `
 
@@ -66,10 +66,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 let link = content[key][i][1];
 
                 contentDiv.innerHTML += `
-                <div class='articles_list'>
-                <ul>
-                    <li><span class='article_title'>${title}</span>: <a href='${link}' target='_blank'>more</a></li>
-                </ul>
+                <div class='content_row'>
+                    <span class='article_title'>${title}</span> - <a class='article_link' href='${link} target='_blank'>more</a>
                 </div>
                 `
             }
@@ -90,10 +88,13 @@ document.addEventListener("DOMContentLoaded", function () {
             e.preventDefault();
             clearContent();
 
-            const keyword = input.value;
-            console.log(`input: ${keyword}`);
-
-            startScraping(keyword);
+            if (input.value.length > 0) {
+                const keyword = input.value;
+                console.log(`input: ${keyword}`);
+                startScraping(keyword);
+            } else {
+                input.placeholder = 'Add something!'
+            }
         })
         
     }

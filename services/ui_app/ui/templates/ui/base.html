@@ -6,12 +6,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href={% static "ui/css/main.css" %} type="text/css">
+    <link rel="icon" type="image/png" href={% static "ui/images/Robot-2-icon.png" %} />
     {% block head %}
     {% endblock %}
     </head>
     <body>
-        <a href='{% url "home-view" %}'>Home</a>
-        <a href='{% url "history-view" %}'>History</a>
+        <div class="header">
+            <div class="navigation">
+                <a class='navigation_link' href='{% url "home-view" %}'>Home</a>
+                <a class='navigation_link' href='{% url "history-view" %}'>History</a>
+                <a class='navigation_link' href="https://github.com/dyeroshenko/news-scraper" target="_blank">About</a>
+            </div>
+        </div>
         {% block content %}
         {% endblock %}
     </body>

@@ -11,10 +11,17 @@
 {% endblock %}
 
 {% block content %}
-<form id='form' method="POST">
-    <input name='keyword' id='keyword' type="text" placeholder="some text">
-    <button type="submit" id="button">Find</button>
-</form>
-<div id='scraped_content'>
+
+
+<div class="wrapper">
+    <span class='sub-title'>News <span class='color'>scraper</span> just in one click!</span>
+    <form id='form' method="POST">
+        <input name='keyword' id='keyword' type="text" placeholder="your keyword...">
+        <button type="submit" id="button">Find</button>
+    </form>
+
+    <div id='scraped_content'></div>
 </div>
+
+
 {% endblock %}

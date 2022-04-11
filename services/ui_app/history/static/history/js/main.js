@@ -35,20 +35,12 @@ document.addEventListener("DOMContentLoaded", function () {
             let keyword = record['keyword'];
 
             contentDiv.innerHTML += `
-            <table>
-            <tr>
-              <th>Timestamp</th>
-              <th>Keyword</th>
-              <th>Articles found</th>
-              <th>Task ID</th>
-            </tr>
-            <tr>
-              <td>${timestamp}</td>
-              <td>${keyword}</td>
-              <td><span style='white-space: pre-wrap'>${content}</span></td>
-              <td>${backend_task_id}</td>
-            </tr>
-          </table>
+                <li class='content_row'>
+                    <span class='color'>${timestamp}</span> | 
+                    keyword: <span class='color'>${keyword}</span>: | 
+                    content: <span class='color'>${content}</span>:  | 
+                    task: <span class='color'>${backend_task_id}</span>
+                </li>
             `
         }
     }

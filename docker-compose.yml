@@ -29,7 +29,7 @@ services:
 
   worker:
       build: ./services/scraper_app
-      command: python3 -m celery -A computing.tasks.celery_app worker #--loglevel=DEBUG
+      command: python3 -m celery -A computing.tasks.celery_app worker --loglevel=DEBUG
       volumes:
         - ./services/scraper_app:/usr/src/app
       networks:
