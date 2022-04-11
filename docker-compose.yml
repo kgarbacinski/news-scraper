@@ -86,7 +86,8 @@ services:
     build: services/ui_app
     entrypoint: [ "/bin/sh","-c" ]
     container_name: ui-app 
-    command: 
+    command:
+      - python3 manage.py migrate
       - python3 manage.py runserver 0.0.0.0:8000
     ports:
       - 8006:8000
