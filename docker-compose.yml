@@ -86,9 +86,10 @@ services:
     build: services/ui_app
     entrypoint: [ "/bin/sh","-c" ]
     container_name: ui-app 
-    command:
-      - python3 manage.py migrate
-      - python3 manage.py runserver 0.0.0.0:8000
+    command: | 
+        python3 manage.py makemigrations
+        python3 manage.py migrate && python3 manage.py migrate --run-syncdb
+        python3 manage.py runserver 0.0.0.0:8000
     ports:
       - 8006:8000
     environment:
