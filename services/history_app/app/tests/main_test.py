@@ -3,7 +3,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 
-from app.endpoints import app, binding
+from app.endpoints import app
 from db.database import Base, get_db
 
 DUMMY_DB = "sqlite:///./test.db"
@@ -13,7 +13,7 @@ engine = create_engine(
 )
 TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-binding = Base.metadata.create_all(bind=engine)
+Base.metadata.create_all(bind=engine)
 
 
 def override_get_db():

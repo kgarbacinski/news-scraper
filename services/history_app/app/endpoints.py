@@ -2,12 +2,15 @@ from fastapi import FastAPI, Depends
 from sqlalchemy.orm import Session
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
+from decouple import config
+import os
 
 from app.auth.auth_bearer import JWTBearer
 from db import models, schemas
 from db.database import get_db, engine
 
-binding = models.Base.metadata.create_all(bind=engine)
+if not config('CI_ENV', os.environ['CI_ENV']) == 'TESTING':
+    models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
