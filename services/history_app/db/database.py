@@ -2,6 +2,10 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
+"""
+Postgres DB connection config
+"""
+
 DATABASE_URL = "postgresql://postgres:postgres@history-db/history_db"
 engine = create_engine(DATABASE_URL)
 

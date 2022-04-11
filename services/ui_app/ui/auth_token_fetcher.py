@@ -1,10 +1,13 @@
 import os
 from decouple import config
 import requests
-import json
 
 
-def get_auth_token():
+def get_auth_token() -> str:
+    """
+    Calls tokenizator-app with secrets in URL path to get valid internal API token.
+    Secrets read from local env.
+    """
     credentials_login = config("CREDENTIALS_LOGIN", os.environ["CREDENTIALS_PASSWORD"])
     credentials_password = config(
         "CREDENTIALS_LOGIN", os.environ["CREDENTIALS_PASSWORD"]

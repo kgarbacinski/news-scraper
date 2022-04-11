@@ -7,9 +7,15 @@ from app.history_handler import HistoryHandler
 
 
 class ScrappingTask(Task):
+    """
+    Celery task interface.
+    Each generated task runs ContentGetter() from scraper.py to get and filter the data.
+    After task in completed with 'SUCCESS' status metadata is sent to history_handler to store in DB.
+    """
+
     name = "scrapping_task"
 
-    def run(self, keyword):
+    def run(self, keyword: str) -> Dict:
         data: Dict = ContentGetter.get(keyword)
         result: Dict = None
 
@@ -20,7 +26,7 @@ class ScrappingTask(Task):
 
         return result
 
-    def on_success(self, retval, task_id, args, kwargs):
+    def on_success(self, retval: str, task_id: str, args, kwargs) -> None:
         task_id = task_id
         keyword = args[0]
         scraped_data = retval
@@ -32,11 +38,6 @@ class ScrappingTask(Task):
 
             for source, articles in scraped_data.get("articles").items():
                 content += f"{source}: {len(articles)}\n"
-
-            # content = {
-            #     source: len(articles)
-            #     for source, articles in scraped_data.get('articles').items()
-            #     }
 
         handler = HistoryHandler(task_id, keyword, content)
 

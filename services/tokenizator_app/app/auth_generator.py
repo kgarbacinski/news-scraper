@@ -3,6 +3,10 @@ from decouple import config
 import os
 import time
 
+"""
+Generates JWT token to be consumed by other services to authenticate.
+"""
+
 JWT_SECRET = config("JWT_SECRET", os.environ["JWT_SECRET"])
 JWT_ALG = config("JWT_ALGORITHM", os.environ["JWT_ALGORITHM"])
 

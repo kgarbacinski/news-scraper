@@ -3,6 +3,10 @@ from dataclasses import dataclass
 
 @dataclass
 class UserAgent:
+    """
+    Dataclass to store randomized UA strings to generate 'user-like' traffic.
+    """
+
     user_agents = [
         "Mozilla/5.0 (Linux; Android 10; RMX1971 Build/QKQ1.190918.001; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/91.0.4472.88 Mobile Safari/537.36 GSA/12.20.9.23.arm64",
         "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_16_0) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/12.2.2 Chrome/78.0.3904.94 Electron/7.1.0 Safari/537.36",

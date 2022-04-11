@@ -3,6 +3,10 @@ from .database import Base
 
 
 class Record(Base):
+    """
+    Model blueprint
+    """
+
     __tablename__ = "History"
 
     id = Column(Integer, primary_key=True, index=True)

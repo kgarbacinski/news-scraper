@@ -7,7 +7,10 @@ JWT_SECRET = config("JWT_SECRET", os.environ["JWT_SECRET"])
 JWT_ALG = config("JWT_ALGORITHM", os.environ["JWT_ALGORITHM"])
 
 
-def decode_JWT(token: str):
+def decode_JWT(token: str) -> str:
+    """
+    Decodes JWT token sent by a consumer against JWT secret & alg stored in local env.
+    """
     try:
         decoded_token = jwt.decode(token, JWT_SECRET, algorithms=[JWT_ALG])
 

@@ -5,6 +5,10 @@ from .auth_handler import decode_JWT
 
 
 class JWTBearer(HTTPBearer):
+    """
+    Validates if token sent by API consumer is valid and allows response from endpoint.
+    """
+
     def __init__(self, auto_error: bool = True):
         super().__init__(auto_error=auto_error)
 
