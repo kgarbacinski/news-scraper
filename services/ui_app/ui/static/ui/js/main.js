@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const contentDiv = document.getElementById('scraped_content');
     const form = document.getElementById('form');
     const input = document.getElementById('keyword')
-    
+
 
     async function fetcher(url) {
         let response = await fetch(url, {
@@ -13,11 +13,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 'Accept': 'application/json',
                 'X-Requested-With': 'XMLHttpRequest',
                 'X-CSRFToken': csrfToken,
-                'Authorization': `Bearer ${readAPITokenFromLocalStorage()}` 
+                'Authorization': `Bearer ${readAPITokenFromLocalStorage()}`
             }
         })
         let result = await response.json();
-        
+
         return result
     }
 
@@ -96,7 +96,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 input.placeholder = 'Add something!'
             }
         })
-        
+
     }
 
     async function startScraping(keyword) {

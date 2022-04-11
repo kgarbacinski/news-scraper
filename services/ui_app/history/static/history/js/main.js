@@ -9,17 +9,17 @@ document.addEventListener("DOMContentLoaded", function () {
                 'Accept': 'application/json',
                 'X-Requested-With': 'XMLHttpRequest',
                 'X-CSRFToken': csrfToken,
-                'Authorization': `Bearer ${readAPITokenFromLocalStorage()}` 
+                'Authorization': `Bearer ${readAPITokenFromLocalStorage()}`
             }
         })
         let result = await response.json();
-        
+
         return result
     }
 
     async function getHistory() {
         const url = `${window.location.protocol}//${window.location.hostname}:8005/records`;
-        let data = await fetcher(url); 
+        let data = await fetcher(url);
 
         console.log('data loaded!')
         return data;
@@ -36,9 +36,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
             contentDiv.innerHTML += `
                 <li class='content_row'>
-                    <span class='color'>${timestamp}</span> | 
-                    keyword: <span class='color'>${keyword}</span>: | 
-                    content: <span class='color'>${content}</span>:  | 
+                    <span class='color'>${timestamp}</span> |
+                    keyword: <span class='color'>${keyword}</span>: |
+                    content: <span class='color'>${content}</span>:  |
                     task: <span class='color'>${backend_task_id}</span>
                 </li>
             `

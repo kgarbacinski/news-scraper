@@ -4,26 +4,26 @@ networks:
   services-network:
     driver: bridge
 
-services: 
+services:
 
   scraper-app:
     build: services/scraper_app
     command: uvicorn app.endpoints:app --host 0.0.0.0 --port 8000 --reload
-    container_name: scraper-app 
+    container_name: scraper-app
     volumes:
       - ./services/scraper_app:/usr/src/app/
     ports:
       - 8004:8000
     networks:
       - services-network
-    environment: 
+    environment:
       - DEBUG=1
       - CELERY_BROKER_URL=redis://redis:6379/0
       - CELERY_RESULT_BACKEND=redis://redis:6379/0
       - JWT_SECRET
       - JWT_ALGORITHM
       - APP_STAGE=PRODUCTION
-    depends_on: 
+    depends_on:
       - redis
 
 
@@ -54,7 +54,7 @@ services:
     build: services/history_app
     command: uvicorn app.endpoints:app --host 0.0.0.0 --reload
     hostname: history-app
-    container_name: history-app 
+    container_name: history-app
     volumes:
       - ./services/history_app:/usr/src/app/
     ports:
@@ -67,7 +67,7 @@ services:
       - history-db
     networks:
       - services-network
-  
+
 
   history-db:
     image: postgres:13-alpine
@@ -80,13 +80,13 @@ services:
       - 5432
     networks:
       - services-network
-  
+
 
   ui-app:
     build: services/ui_app
     entrypoint: [ "/bin/sh","-c" ]
-    container_name: ui-app 
-    command: 
+    container_name: ui-app
+    command:
       - python3 manage.py runserver 0.0.0.0:8000
     ports:
       - 8006:8000
@@ -104,7 +104,7 @@ services:
     build: services/tokenizator_app
     command: uvicorn app.endpoints:app --host 0.0.0.0 --reload
     hostname: tokenizator-app
-    container_name: tokenizator-app 
+    container_name: tokenizator-app
     volumes:
       - ./services/tokenizator_app:/usr/src/app/
     ports:

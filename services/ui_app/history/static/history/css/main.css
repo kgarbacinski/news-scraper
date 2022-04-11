@@ -1,15 +1,15 @@
-/* Content */ 
+/* Content */
 * {
     margin: 0;
     padding: 0;
   }
-  
+
   textarea,
   input,
   button {
     outline: none;
   }
-  
+
   body {
     background-color: #323249;
     display: flex;
@@ -20,7 +20,7 @@
     width: 100vw;
     height: 100vh;
   }
-  
+
   .wrapper {
     width: 60%;
     height: 95vh;
@@ -29,7 +29,7 @@
     justify-content: start;
     align-items: center;
   }
-  
+
   form {
     display: flex;
     width: 100%;
@@ -37,7 +37,7 @@
     justify-content: start;
     box-shadow: 1px 6px 10px rgb(0 0 0 / 50%);
   }
-  
+
   #scraped_content {
     margin-top: 1%;
     display: flex;
@@ -45,8 +45,8 @@
     flex-direction: column;
     justify-content: start;
   }
-  
-  
+
+
   input {
     width: 90%;
     padding-top: 2%;
@@ -55,13 +55,13 @@
     border: 0.1px;
     background-color: #E0E0E0;
   }
-  
+
   input[type='text'] {
     font-size: 1.5vh;
     font-family: 'Roboto', sans-serif;
     font-weight: 500;
   }
-  
+
   button {
     width: 15%;
     border: 0.1px;
@@ -71,19 +71,19 @@
     margin-left: 0.5%;
     font-size: 0.7vw;
   }
-  
+
   button:hover {
     background-color: #E28E38;
     color: #E0E0E0;
   }
-  
+
   .sub-title {
     color: #E0E0E0;
     font-size: 1.5vw;
     margin-top: 3%;
     margin-bottom: 3%;
   }
-  
+
   .header {
     width: 60%;
     display: flex;
@@ -91,7 +91,7 @@
     margin-top: 2%;
     margin-bottom: 2%;
   }
-  
+
   .navigation {
     margin-right: 3%;
     width: 20%;
@@ -101,21 +101,21 @@
     padding-left: 5%;
     padding-right: 5%;
   }
-  
+
   a.navigation_link {
     color: #E0E0E0;
     text-decoration: none;
     font-size: 1vw;
   }
-  
+
   a.navigation_link:hover {
     color: #E28E38;
   }
-  
+
   .about {
     margin-bottom: 2%
   }
-  
+
   .source {
     text-align: center;
     border: 3px solid #ffa03c;
@@ -126,7 +126,7 @@
     font-size: 1vw;
     color: #E0E0E0;
   }
-  
+
   .content_row {
     color: #E0E0E0;
     margin-top: 0.3%;
@@ -134,16 +134,16 @@
     padding-bottom: 1%;
     padding-left: 1%;
   }
-  
+
   .color {
     color: #ffa03c;
   }
-  
+
   a.article_link {
     color: #ffa03c;
     text-decoration: none;
   }
-  
+
   a.article_link:hover {
     color: #E28E38;
   }

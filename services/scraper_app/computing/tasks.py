@@ -5,8 +5,9 @@ from scraper.scraper import ContentGetter
 from .celeryconfig import Config
 from app.history_handler import HistoryHandler
 
+
 class ScrappingTask(Task):
-    name = 'scrapping_task'
+    name = "scrapping_task"
 
     def run(self, keyword):
         data: Dict = ContentGetter.get(keyword)
@@ -24,21 +25,21 @@ class ScrappingTask(Task):
         keyword = args[0]
         scraped_data = retval
 
-        if 'message' in scraped_data.keys():
+        if "message" in scraped_data.keys():
             content = scraped_data
         else:
-            content = ''
+            content = ""
 
-            for source, articles in scraped_data.get('articles').items():
+            for source, articles in scraped_data.get("articles").items():
                 content += f"{source}: {len(articles)}\n"
 
             # content = {
-            #     source: len(articles) 
+            #     source: len(articles)
             #     for source, articles in scraped_data.get('articles').items()
             #     }
 
         handler = HistoryHandler(task_id, keyword, content)
-        
+
         return handler.add_new_record()
 
 
