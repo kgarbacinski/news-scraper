@@ -9,7 +9,7 @@ from app.auth.auth_bearer import JWTBearer
 from db import models, schemas
 from db.database import get_db, engine
 
-if not config('CI_ENV', os.environ['CI_ENV']) == 'TESTING':
+if not config('APP_STAGE', os.environ['APP_STAGE']) == 'TESTING':
     models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()

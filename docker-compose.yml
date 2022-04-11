@@ -25,6 +25,7 @@ services:
       - SCRAPER_APP_ADMIN_LOGIN
       - SCRAPER_APP_ADMIN_PASSWORD
       - API_AUTH_TOKEN
+      - APP_STAGE=PRODUCTION
     depends_on: 
       - redis
 
@@ -62,6 +63,7 @@ services:
     environment:
       - JWT_SECRET
       - JWT_ALGORITHM
+      - APP_STAGE=PRODUCTION
     depends_on:
       - history-db
     networks:

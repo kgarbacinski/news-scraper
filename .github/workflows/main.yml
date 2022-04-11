@@ -19,7 +19,7 @@ jobs:
        HISTORY_APP_DB: ${{ secrets.HISTORY_APP_DB }}
        HISTORY_APP_DB_USER: ${{ secrets.HISTORY_APP_DB_USER }}
        HISTORY_APP_DB_PASSWORD: ${{ secrets.HISTORY_APP_DB_PASSWORD }}
-       CI_ENV: TESTING
+       APP_STAGE: TESTING
 
     steps:
       - name: Set up check-out
