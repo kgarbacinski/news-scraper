@@ -10,12 +10,26 @@ class HistoryHandler:
         self.scraped_data = scraped_data
         self.timestamp = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
 
+    @staticmethod
+    def get_auth_token():
+        credentials_login = config('CREDENTIALS_LOGIN', os.environ['CREDENTIALS_PASSWORD'])
+        credentials_password = config('CREDENTIALS_LOGIN', os.environ['CREDENTIALS_PASSWORD'])
+
+        URL = f'http://tokenizator-app:8000/get_auth_token/{credentials_login}/{credentials_password}'
+        headers = {'Content-type': 'application/json'}
+
+        response = requests.get(URL, headers=headers)
+        data = response.json()
+        token = data['auth_token']
+
+        return token
+
+
     def add_new_record(self):
         URL = 'http://history-app:8000/new_record'
-        API_AUTH_TOKEN = config('API_AUTH_TOKEN', os.environ['API_AUTH_TOKEN'])
         headers = {
             'Content-type': 'application/json',
-            'Authorization': f'Bearer {API_AUTH_TOKEN}'
+            'Authorization': f'Bearer {self.get_auth_token()}'
             }
         payload = {
             'task_id': self.task_id,

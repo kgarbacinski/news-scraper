@@ -13,13 +13,12 @@ jobs:
     env:
        JWT_SECRET: ${{ secrets.JWT_SECRET }}
        JWT_ALGORITHM: ${{ secrets.JWT_ALGORITHM }}
-       API_AUTH_TOKEN: ${{ secrets.API_AUTH_TOKEN }}
-       SCRAPER_APP_ADMIN_LOGIN: ${{ secrets.SCRAPER_APP_ADMIN_LOGIN }}
-       SCRAPER_APP_ADMIN_PASSWORD: ${{ secrets.SCRAPER_APP_ADMIN_PASSWORD }}
        HISTORY_APP_DB: ${{ secrets.HISTORY_APP_DB }}
        HISTORY_APP_DB_USER: ${{ secrets.HISTORY_APP_DB_USER }}
        HISTORY_APP_DB_PASSWORD: ${{ secrets.HISTORY_APP_DB_PASSWORD }}
        APP_STAGE: TESTING
+       CREDENTIALS_LOGIN: ${{ secrets.CREDENTIALS_LOGIN }}
+       CREDENTIALS_PASSWORD: ${{ secrets.CREDENTIALS_PASSWORD }}
 
     steps:
       - name: Set up check-out

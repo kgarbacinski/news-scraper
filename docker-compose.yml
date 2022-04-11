@@ -22,9 +22,6 @@ services:
       - CELERY_RESULT_BACKEND=redis://redis:6379/0
       - JWT_SECRET
       - JWT_ALGORITHM
-      - SCRAPER_APP_ADMIN_LOGIN
-      - SCRAPER_APP_ADMIN_PASSWORD
-      - API_AUTH_TOKEN
       - APP_STAGE=PRODUCTION
     depends_on: 
       - redis
@@ -40,7 +37,9 @@ services:
       environment:
         - CELERY_BROKER_URL=redis://redis:6379/0
         - CELERY_RESULT_BACKEND=redis://redis:6379/0
-        - API_AUTH_TOKEN
+        - CREDENTIALS_LOGIN
+        - CREDENTIALS_PASSWORD
+        - APP_STAGE=PRODUCTION
       depends_on:
         - scraper-app
         - redis
@@ -92,9 +91,29 @@ services:
     ports:
       - 8006:8000
     environment:
-      - API_AUTH_TOKEN
+      - APP_STAGE=PRODUCTION
+      - CREDENTIALS_LOGIN
+      - CREDENTIALS_PASSWORD
     depends_on:
       - scraper-app
       - history-app
+    networks:
+      - services-network
+
+  tokenizator-app:
+    build: services/tokenizator_app
+    command: uvicorn app.endpoints:app --host 0.0.0.0 --reload
+    hostname: tokenizator-app
+    container_name: tokenizator-app 
+    volumes:
+      - ./services/tokenizator_app:/usr/src/app/
+    ports:
+      - 8007:8000
+    environment:
+      - JWT_SECRET
+      - JWT_ALGORITHM
+      - APP_STAGE=PRODUCTION
+      - CREDENTIALS_LOGIN
+      - CREDENTIALS_PASSWORD
     networks:
       - services-network
