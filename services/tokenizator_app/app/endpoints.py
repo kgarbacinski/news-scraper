@@ -3,7 +3,7 @@ from fastapi.responses import JSONResponse
 from decouple import config
 import os
 
-from app.auth.auth_generator import generate_JWT
+from .auth_generator import generate_JWT
 
 app = FastAPI()
 
